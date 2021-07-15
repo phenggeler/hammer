@@ -1,17 +1,13 @@
 name: Rails Unit Tests
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
-  brakeman:
-    name: runner / brakeman
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-18.04
     steps:
-      - name: Check out code
-        uses: actions/checkout@v1
-      - name: brakeman
-        uses: reviewdog/action-brakeman@v1
-        with:
-          brakeman_version: 4.8.2
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review # Default is github-pr-check
+    - uses: actions/checkout@v1
+    - name: Brakeman
+      uses: devmasx/brakeman-linter-action@v1.0.0
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
